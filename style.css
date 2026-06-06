@@ -332,11 +332,11 @@ a {
 }
 
 .hero-tagline {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: clamp(18px, 2.5vw, 28px);
-  color: var(--text-primary);
-  margin-top: 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 300;
+  color: var(--text-secondary);
+  margin-top: 24px;
   opacity: 0;
   max-width: 520px;
 }
@@ -510,9 +510,9 @@ a {
 }
 
 .statement-quote {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: clamp(22px, 3vw, 30px);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: clamp(20px, 2.5vw, 28px);
   color: var(--text-primary);
   line-height: 1.7;
   opacity: 0;
@@ -647,9 +647,9 @@ a {
 }
 
 .approach-card-quote {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
   color: var(--text-primary);
   line-height: 1.6;
   margin-bottom: 16px;
@@ -804,9 +804,9 @@ a {
 }
 
 .about-closing {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
   color: var(--accent-gold);
   margin-top: 32px;
 }
@@ -844,9 +844,8 @@ a {
 }
 
 .testimonial-card-text {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
   color: var(--text-primary);
   line-height: 1.7;
   margin-bottom: 24px;
@@ -881,9 +880,9 @@ a {
 }
 
 .contact-tagline {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 22px;
   color: var(--text-primary);
   line-height: 1.6;
   margin-bottom: 40px;
@@ -1159,8 +1158,7 @@ a {
 }
 
 .profile-definition {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(18px, 2.2vw, 24px);
   line-height: 1.7;
   color: var(--text-primary);

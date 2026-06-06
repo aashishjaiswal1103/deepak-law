@@ -5,6 +5,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // Inject content from content.js first
+  injectContent();
+
   // Wait for GSAP to load
   const initInterval = setInterval(() => {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
@@ -519,6 +522,255 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+  }
+
+  /* ============================================
+     DYNAMIC CONTENT INJECTION
+     ============================================ */
+  function injectContent() {
+    if (typeof SITE_CONTENT === 'undefined') return;
+
+    // Hero Section
+    const heroLabel = document.getElementById('heroLabel');
+    if (heroLabel) heroLabel.innerHTML = SITE_CONTENT.hero.label;
+
+    const heroName = document.getElementById('heroName');
+    if (heroName) {
+      heroName.innerHTML = `<span>${SITE_CONTENT.hero.nameFirst}</span><span>${SITE_CONTENT.hero.nameLast}</span>`;
+    }
+
+    const heroTagline = document.getElementById('heroTagline');
+    if (heroTagline) heroTagline.innerHTML = SITE_CONTENT.hero.tagline;
+
+    const heroCtas = document.getElementById('heroCtas');
+    if (heroCtas) {
+      heroCtas.innerHTML = `
+        <a href="#contact" class="btn btn-primary" data-hover><span>${SITE_CONTENT.hero.ctaPrimary}</span></a>
+        <a href="#practice" class="btn btn-ghost" data-hover><span>${SITE_CONTENT.hero.ctaSecondary}</span></a>
+      `;
+    }
+
+    // Overview Section
+    const overviewSection = document.getElementById('overview');
+    if (overviewSection) {
+      const label = overviewSection.querySelector('[data-anim="label"]');
+      if (label) label.innerHTML = SITE_CONTENT.overview.label;
+
+      const title = overviewSection.querySelector('[data-anim="title"]');
+      if (title) title.innerHTML = SITE_CONTENT.overview.title;
+
+      const def = overviewSection.querySelector('.profile-definition');
+      if (def) def.innerHTML = SITE_CONTENT.overview.definition;
+
+      const highlight = overviewSection.querySelector('.profile-philosophy-highlight');
+      if (highlight) highlight.innerHTML = SITE_CONTENT.overview.highlight;
+
+      const sidebarTitle = overviewSection.querySelector('.sidebar-title');
+      if (sidebarTitle) sidebarTitle.innerHTML = SITE_CONTENT.overview.sidebarTitle;
+
+      const credentialsList = overviewSection.querySelector('.credentials-list');
+      if (credentialsList) {
+        credentialsList.innerHTML = SITE_CONTENT.overview.credentials.map(c => `
+          <li>
+            <span class="cred-label">${c.label}</span>
+            <span class="cred-val">${c.val}</span>
+          </li>
+        `).join('');
+      }
+    }
+
+    // Statement Section
+    const statementQuote = document.getElementById('statementQuote');
+    if (statementQuote) statementQuote.innerHTML = SITE_CONTENT.statement.quote;
+
+    const statementAttrib = document.getElementById('statementAttrib');
+    if (statementAttrib) statementAttrib.innerHTML = SITE_CONTENT.statement.attribution;
+
+    // Practice Section
+    const practiceSection = document.getElementById('practice');
+    if (practiceSection) {
+      const label = practiceSection.querySelector('[data-anim="label"]');
+      if (label) label.innerHTML = SITE_CONTENT.practice.label;
+
+      const title = practiceSection.querySelector('[data-anim="title"]');
+      if (title) title.innerHTML = SITE_CONTENT.practice.title;
+
+      const grid = practiceSection.querySelector('.practice-grid');
+      if (grid) {
+        grid.innerHTML = SITE_CONTENT.practice.cards.map(card => `
+          <div class="practice-card" data-anim="card" data-hover>
+            <span class="practice-card-numeral">${card.numeral}</span>
+            <h3 class="practice-card-title">${card.title}</h3>
+            <p class="practice-card-desc">${card.desc}</p>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Approach Section
+    const approachSection = document.getElementById('approach');
+    if (approachSection) {
+      const label = approachSection.querySelector('[data-anim="label"]');
+      if (label) label.innerHTML = SITE_CONTENT.approach.label;
+
+      const title = approachSection.querySelector('[data-anim="title"]');
+      if (title) title.innerHTML = SITE_CONTENT.approach.title;
+
+      const grid = approachSection.querySelector('.approach-grid');
+      if (grid) {
+        grid.innerHTML = SITE_CONTENT.approach.cards.map(card => `
+          <div class="approach-card" data-anim="card" data-hover>
+            <h3 class="approach-card-title">${card.title}</h3>
+            <p class="approach-card-quote">${card.quote}</p>
+            <p class="approach-card-desc">${card.desc}</p>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Philosophy Section
+    const philosophySection = document.getElementById('philosophy');
+    if (philosophySection) {
+      const label = philosophySection.querySelector('[data-anim="label"]');
+      if (label) label.innerHTML = SITE_CONTENT.philosophy.label;
+
+      const title = philosophySection.querySelector('[data-anim="title"]');
+      if (title) title.innerHTML = SITE_CONTENT.philosophy.title;
+
+      const content = philosophySection.querySelector('.philosophy-content');
+      if (content) {
+        content.innerHTML = `
+          <div class="philosophy-left-rule" data-anim="gold-rule-v"></div>
+          ${SITE_CONTENT.philosophy.blocks.map(b => `
+            <div class="philosophy-block" data-anim="philosophy">
+              <span class="philosophy-marker">${b.marker}</span>
+              <h3 class="philosophy-subtitle">${b.title}</h3>
+              <p class="philosophy-text">${b.text}</p>
+            </div>
+          `).join('')}
+        `;
+      }
+    }
+
+    // About Section
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      const label = aboutSection.querySelector('[data-anim="label"]');
+      if (label) label.innerHTML = SITE_CONTENT.about.label;
+
+      const title = aboutSection.querySelector('.section-title');
+      if (title) title.innerHTML = SITE_CONTENT.about.title;
+
+      const sub = aboutSection.querySelector('.about-right-sub');
+      if (sub) sub.innerHTML = SITE_CONTENT.about.sub;
+
+      const right = aboutSection.querySelector('.about-right');
+      if (right) {
+        const labels = right.querySelector('.about-right-label');
+        if (labels) labels.innerHTML = SITE_CONTENT.about.label;
+
+        const name = right.querySelector('.about-right-name');
+        if (name) name.innerHTML = SITE_CONTENT.about.title;
+
+        // Clear existing paragraphs and insert new ones
+        const paragraphs = right.querySelectorAll('.about-text');
+        paragraphs.forEach(p => p.remove());
+
+        const closing = right.querySelector('.about-closing');
+        if (closing) closing.innerHTML = SITE_CONTENT.about.closing;
+
+        // Insert new paragraphs before the closing phrase
+        SITE_CONTENT.about.texts.forEach(text => {
+          const p = document.createElement('p');
+          p.className = 'about-text';
+          p.innerHTML = text;
+          right.insertBefore(p, closing);
+        });
+      }
+
+      const detailsList = aboutSection.querySelector('.about-details');
+      if (detailsList) {
+        detailsList.innerHTML = SITE_CONTENT.about.details.map(d => `
+          <div class="about-detail-row">
+            <span class="about-detail-label">${d.label}</span>
+            <span class="about-detail-value">${d.val}</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Testimonials Section
+    const testimonialsSection = document.getElementById('testimonials');
+    if (testimonialsSection) {
+      const label = testimonialsSection.querySelector('[data-anim="label"]');
+      if (label) label.innerHTML = SITE_CONTENT.testimonials.label;
+
+      const title = testimonialsSection.querySelector('[data-anim="title"]');
+      if (title) title.innerHTML = SITE_CONTENT.testimonials.title;
+
+      const grid = testimonialsSection.querySelector('.testimonials-grid');
+      if (grid) {
+        grid.innerHTML = SITE_CONTENT.testimonials.cards.map(card => `
+          <div class="testimonial-card" data-anim="card" data-hover>
+            <div class="testimonial-card-quote-mark">"</div>
+            <p class="testimonial-card-text">${card.quote}</p>
+            <div class="testimonial-card-attribution">${card.attribution}</div>
+            ${card.rating ? `<div class="testimonial-card-stars">${card.rating}</div>` : ''}
+          </div>
+        `).join('');
+      }
+    }
+
+    // FAQ Section
+    const faqSection = document.getElementById('faq');
+    if (faqSection) {
+      const label = faqSection.querySelector('[data-anim="label"]');
+      if (label) label.innerHTML = SITE_CONTENT.faq.label;
+
+      const title = faqSection.querySelector('[data-anim="title"]');
+      if (title) title.innerHTML = SITE_CONTENT.faq.title;
+
+      const container = faqSection.querySelector('.faq-accordion-container');
+      if (container) {
+        container.innerHTML = SITE_CONTENT.faq.items.map(item => `
+          <div class="faq-item" data-anim="card" data-hover>
+            <button class="faq-trigger" aria-expanded="false">
+              <span>${item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <p>${item.answer}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Contact Section
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      const label = contactSection.querySelector('[data-anim="label"]');
+      if (label) label.innerHTML = SITE_CONTENT.contact.label;
+
+      const title = contactSection.querySelector('[data-anim="title"]');
+      if (title) title.innerHTML = SITE_CONTENT.contact.title;
+
+      const tagline = contactSection.querySelector('.contact-tagline');
+      if (tagline) tagline.innerHTML = SITE_CONTENT.contact.tagline;
+
+      const details = contactSection.querySelector('.contact-details');
+      if (details) {
+        details.innerHTML = SITE_CONTENT.contact.details.map(d => `
+          <div class="contact-detail">
+            <div class="contact-detail-icon"></div>
+            <div class="contact-detail-content">
+              <span class="contact-detail-label">${d.label}</span>
+              <span class="contact-detail-value">${d.val}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
   }
 
 });
