@@ -38,6 +38,7 @@ Disallow: /
 
 # General rules
 User-agent: *
+
 Allow: /
 Disallow: /api/
 
