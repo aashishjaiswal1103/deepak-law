@@ -42,4 +42,4 @@ Allow: /
 Disallow: /api/
 
 # Reference sitemap location
-Sitemap: https://deepak-law.vercel.app/sitemap.xml
+Sitemap: https://deepak-law.vercel.app/seo/sitemap.xml
