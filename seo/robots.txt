@@ -1,5 +1,5 @@
 # =========================================================================
-# ROBOTS.TXT — ADVOCATE RITIK JAYASWAL PORTFOLIO (MASTER SEO DIRECTORY)
+# ROBOTS.TXT — ADVOCATE DEEPAK BUNKAR PORTFOLIO (MASTER SEO DIRECTORY)
 # Path: /seo/robots.txt
 # =========================================================================
 
@@ -48,4 +48,4 @@ Allow: /
 Disallow: /api/
 
 # Reference sitemap location
-Sitemap: https://ritik-jayaswal.vercel.app/sitemap.xml
+Sitemap: https://deepak-bunkar.vercel.app/sitemap.xml

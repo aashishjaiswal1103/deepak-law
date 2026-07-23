@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" fill="none" stroke="#D0D0CC" stroke-width="1" opacity="0.45">
+  <!-- Soft minimal world map silhouette line representation -->
+  <path d="M150 120 Q180 100 240 110 T320 140 T380 190 T290 280 T200 220 T150 120 Z" fill="#EFEFEA"/>
+  <path d="M220 320 Q260 300 290 350 T310 440 T270 470 T230 400 Z" fill="#EFEFEA"/>
+  <path d="M450 110 Q500 90 550 120 T540 220 T460 250 T430 180 Z" fill="#EFEFEA"/>
+  <path d="M470 260 Q520 250 560 300 T550 420 T480 450 T450 360 Z" fill="#EFEFEA"/>
+  <path d="M580 90 Q680 70 780 100 T850 180 T750 240 T620 200 Z" fill="#EFEFEA"/>
+  <path d="M720 280 Q800 260 850 320 T820 400 T730 380 Z" fill="#EFEFEA"/>
+  <path d="M800 350 Q880 340 920 390 T880 460 T820 420 Z" fill="#EFEFEA"/>
+</svg>

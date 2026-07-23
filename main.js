@@ -1,412 +1,251 @@
 /* ============================================
-   RITIK JAYASWAL — ANIMATION ENGINE
-   GSAP + ScrollTrigger + Custom Cursor
+   DEEPAK BUNKAR — ADVOCATE
+   Luxury Editorial Minimalism Animations & API
+   (Anime.js + Resend API Integration)
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Inject content from content.js first
-  injectContent();
-
-  // Wait for GSAP to load
-  const initInterval = setInterval(() => {
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      clearInterval(initInterval);
-      gsap.registerPlugin(ScrollTrigger);
-      initAll();
-    }
-  }, 50);
-
-  function initAll() {
-    initCustomCursor();
-    initGridOverlay();
-    initPageLoadSequence();
-    initScrollAnimations();
-    initNavigation();
-    initFormHandling();
-    initMobileNav();
-    initSmoothScroll();
-    initFaqAccordion();
-  }
+  // Initialize Animations & Form Handler
+  initNavEffects();
+  initAnimeAnimations();
+  initContactFormAPI();
 
   /* ============================================
-     CUSTOM CURSOR (Desktop Only)
+     1. NAVBAR EFFECTS
      ============================================ */
-  function initCustomCursor() {
-    if (window.innerWidth < 768) return;
-
-    const dot = document.getElementById('cursorDot');
-    const outline = document.getElementById('cursorOutline');
-    if (!dot || !outline) return;
-
-    let mouseX = 0, mouseY = 0;
-    let outlineX = 0, outlineY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      // Dot follows instantly
-      dot.style.left = mouseX + 'px';
-      dot.style.top = mouseY + 'px';
-    });
-
-    // Outline follows with slight lag
-    function animateOutline() {
-      outlineX += (mouseX - outlineX) * 0.15;
-      outlineY += (mouseY - outlineY) * 0.15;
-      outline.style.left = outlineX + 'px';
-      outline.style.top = outlineY + 'px';
-      requestAnimationFrame(animateOutline);
-    }
-    animateOutline();
-
-    // Hover state for interactive elements
-    const hoverElements = document.querySelectorAll('[data-hover]');
-    hoverElements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        dot.classList.add('hovering');
-        outline.classList.add('hovering');
-      });
-      el.addEventListener('mouseleave', () => {
-        dot.classList.remove('hovering');
-        outline.classList.remove('hovering');
-      });
-    });
-  }
-
-  /* ============================================
-     BLUEPRINT GRID OVERLAY
-     ============================================ */
-  function initGridOverlay() {
-    if (window.innerWidth < 768) return;
-
-    const hLines = document.getElementById('hLines');
-    const vLines = document.getElementById('vLines');
-    if (!hLines || !vLines) return;
-
-    const spacing = 64;
-    const vh = window.innerHeight;
-    const vw = window.innerWidth;
-
-    // Create horizontal lines
-    const hCount = Math.ceil(vh / spacing) + 1;
-    for (let i = 0; i < hCount; i++) {
-      const line = document.createElement('div');
-      line.className = 'h-line';
-      line.style.top = (i * spacing) + 'px';
-      hLines.appendChild(line);
-    }
-
-    // Create vertical lines
-    const vCount = Math.ceil(vw / spacing) + 1;
-    for (let i = 0; i < vCount; i++) {
-      const line = document.createElement('div');
-      line.className = 'v-line';
-      line.style.left = (i * spacing) + 'px';
-      vLines.appendChild(line);
-    }
-  }
-
-  /* ============================================
-     PAGE LOAD SEQUENCE
-     ============================================ */
-  function initPageLoadSequence() {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-    // 0.0s — Grid lines draw in
-    if (window.innerWidth >= 768) {
-      tl.to('.h-line', {
-        width: '100%',
-        duration: 1.2,
-        stagger: 0.03,
-        ease: 'power2.out'
-      }, 0);
-
-      tl.to('.v-line', {
-        height: '100vh',
-        duration: 1.2,
-        stagger: 0.03,
-        ease: 'power2.out'
-      }, 0.3);
-    }
-
-    // 0.8s — Background fade
-    tl.to('body', {
-      backgroundColor: '#0A0A0A',
-      duration: 0.6,
-      ease: 'power2.inOut'
-    }, 0.8);
-
-    // 1.0s — Hero label letter-by-letter
-    const heroLabel = document.getElementById('heroLabel');
-    if (heroLabel) {
-      const text = heroLabel.textContent;
-      heroLabel.innerHTML = '';
-      text.split('').forEach((char, i) => {
-        const span = document.createElement('span');
-        span.textContent = char;
-        span.style.opacity = '0';
-        span.style.display = 'inline-block';
-        if (char === ' ') span.style.width = '0.3em';
-        heroLabel.appendChild(span);
-      });
-
-      tl.to(heroLabel, { opacity: 1, duration: 0.01 }, 1.0);
-      tl.to(heroLabel.children, {
-        opacity: 1,
-        duration: 0.04,
-        stagger: 0.04,
-        ease: 'none'
-      }, 1.0);
-    }
-
-    // 1.4s — Hero name clip mask reveal
-    tl.to('#heroName span', {
-      y: 0,
-      duration: 0.8,
-      stagger: 0.2,
-      ease: 'power3.out'
-    }, 1.4);
-
-    // 1.8s — Gold rule draws in
-    tl.to('#heroGoldRule', {
-      width: '100%',
-      duration: 0.6,
-      ease: 'power2.out'
-    }, 1.8);
-
-    // 2.2s — Tagline fade in
-    tl.to('#heroTagline', {
-      opacity: 1,
-      duration: 0.5,
-      ease: 'power2.out'
-    }, 2.2);
-
-    // 2.6s — CTA buttons
-    tl.to('#heroCtas', {
-      opacity: 1,
-      duration: 0.4,
-      ease: 'power2.out'
-    }, 2.6);
-
-    // 3.0s — Portrait
-    tl.to('#heroPortrait', {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out'
-    }, 3.0);
-
-    // Set initial portrait y
-    gsap.set('#heroPortrait', { y: 20 });
-
-    // 3.2s — Scroll indicator
-    tl.to('#scrollIndicator', {
-      opacity: 1,
-      duration: 0.4
-    }, 3.2);
-  }
-
-  /* ============================================
-     SCROLL ANIMATIONS
-     ============================================ */
-  function initScrollAnimations() {
-    const isMobile = window.innerWidth < 768;
-
-    // --- Section Labels: letter-by-letter stagger ---
-    document.querySelectorAll('[data-anim="label"]').forEach(label => {
-      const text = label.textContent;
-      label.innerHTML = '';
-      text.split('').forEach(char => {
-        const span = document.createElement('span');
-        span.textContent = char;
-        span.style.opacity = '0';
-        span.style.display = 'inline-block';
-        if (char === ' ') span.style.width = '0.3em';
-        label.appendChild(span);
-      });
-
-      ScrollTrigger.create({
-        trigger: label,
-        start: 'top 85%',
-        once: true,
-        onEnter: () => {
-          if (isMobile) {
-            gsap.to(label.children, { opacity: 1, duration: 0.4 });
-          } else {
-            gsap.to(label.children, {
-              opacity: 1,
-              duration: 0.03,
-              stagger: 0.03,
-              ease: 'none'
-            });
-          }
-        }
-      });
-    });
-
-    // --- Section Titles: clip mask reveal ---
-    document.querySelectorAll('[data-anim="title"]').forEach(title => {
-      gsap.set(title, { clipPath: 'inset(100% 0 0 0)', opacity: 0 });
-
-      ScrollTrigger.create({
-        trigger: title,
-        start: 'top 85%',
-        once: true,
-        onEnter: () => {
-          gsap.to(title, {
-            clipPath: 'inset(0% 0 0 0)',
-            opacity: 1,
-            duration: 0.7,
-            ease: 'power3.out'
-          });
-        }
-      });
-    });
-
-    // --- Cards: fade up with stagger ---
-    document.querySelectorAll('[data-anim="card"]').forEach((card, i) => {
-      ScrollTrigger.create({
-        trigger: card,
-        start: 'top 88%',
-        once: true,
-        onEnter: () => {
-          gsap.to(card, {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            delay: (i % 3) * 0.1,
-            ease: 'power2.out'
-          });
-        }
-      });
-    });
-
-    // --- Gold margin rules ---
-    document.querySelectorAll('[data-anim="gold-rule"]').forEach(rule => {
-      ScrollTrigger.create({
-        trigger: rule.parentElement,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-          gsap.to(rule, {
-            opacity: 1,
-            duration: 0.8,
-            ease: 'power2.out'
-          });
-        }
-      });
-    });
-
-    // --- Statement Quote ---
-    const statementQuote = document.getElementById('statementQuote');
-    if (statementQuote) {
-      ScrollTrigger.create({
-        trigger: statementQuote,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-          gsap.to(statementQuote, {
-            opacity: 1,
-            duration: 0.8,
-            ease: 'power2.out'
-          });
-          gsap.to('#statementRule', {
-            width: 80,
-            duration: 0.6,
-            delay: 0.4,
-            ease: 'power2.out'
-          });
-          gsap.to('#statementAttrib', {
-            opacity: 1,
-            duration: 0.4,
-            delay: 0.6,
-            ease: 'power2.out'
-          });
-        }
-      });
-    }
-
-    // --- Philosophy blocks: sequential fade ---
-    document.querySelectorAll('[data-anim="philosophy"]').forEach((block, i) => {
-      ScrollTrigger.create({
-        trigger: block,
-        start: 'top 85%',
-        once: true,
-        onEnter: () => {
-          gsap.to(block, {
-            opacity: 1,
-            duration: 0.6,
-            delay: i * 0.4,
-            ease: 'power2.out'
-          });
-        }
-      });
-    });
-
-    // --- Philosophy left rule ---
-    document.querySelectorAll('[data-anim="gold-rule-v"]').forEach(rule => {
-      ScrollTrigger.create({
-        trigger: rule.parentElement,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-          gsap.to(rule, {
-            opacity: 1,
-            duration: 1.0,
-            ease: 'power2.out'
-          });
-        }
-      });
-    });
-
-    // --- Gold rule lines in sections (draw width) ---
-    // Already handled by gold-rule animation above
-  }
-
-  /* ============================================
-     NAVIGATION
-     ============================================ */
-  function initNavigation() {
-    const nav = document.getElementById('mainNav');
-    if (!nav) return;
-
-    let lastScrollY = 0;
+  function initNavEffects() {
+    const headerNav = document.querySelector('.header-nav');
+    if (!headerNav) return;
 
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      if (scrollY > 80) {
-        nav.classList.add('scrolled');
+      if (window.scrollY > 40) {
+        headerNav.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.05)';
+        headerNav.style.padding = '14px 0';
       } else {
-        nav.classList.remove('scrolled');
+        headerNav.style.boxShadow = 'none';
+        headerNav.style.padding = '22px 0';
       }
-      lastScrollY = scrollY;
-    }, { passive: true });
+    });
+
+    // Smooth scroll for nav anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          e.preventDefault();
+          const headerOffset = 80;
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
   }
 
   /* ============================================
-     FORM HANDLING
+     2. ANIME.JS ANIMATION ENGINE
      ============================================ */
-  function initFormHandling() {
-    const form = document.getElementById('contactForm');
-    const submitBtn = document.getElementById('formSubmit');
-    if (!form || !submitBtn) return;
+  function initAnimeAnimations() {
+    if (typeof anime === 'undefined') return;
 
-    form.addEventListener('submit', async (e) => {
+    // A. Hero Section Timeline Reveal (Spring & Stagger)
+    const heroTl = anime.timeline({
+      easing: 'spring(1, 80, 12, 0)',
+      duration: 1200
+    });
+
+    heroTl
+      .add({
+        targets: '.header-nav',
+        translateY: [-30, 0],
+        opacity: [0, 1],
+        duration: 800
+      })
+      .add({
+        targets: '.hero-col-left .anim-reveal',
+        translateY: [35, 0],
+        opacity: [0, 1],
+        delay: anime.stagger(100)
+      }, '-=400')
+      .add({
+        targets: '.hero-statue-img',
+        scale: [0.88, 1],
+        opacity: [0, 1],
+        duration: 1000
+      }, '-=800')
+      .add({
+        targets: '.hero-col-right .anim-reveal',
+        translateX: [40, 0],
+        opacity: [0, 1],
+        duration: 900
+      }, '-=800');
+
+    // B. Continuous Subtle Floating Animation for 3D Visual Objects
+    anime({
+      targets: '.hero-statue-img',
+      translateY: [-10, 10],
+      duration: 3200,
+      direction: 'alternate',
+      loop: true,
+      easing: 'easeInOutQuad'
+    });
+
+    anime({
+      targets: '.expertise-books-img',
+      translateY: [-8, 8],
+      duration: 2800,
+      direction: 'alternate',
+      loop: true,
+      easing: 'easeInOutSine'
+    });
+
+    anime({
+      targets: '.pencils-bowl-img',
+      rotate: [-3, 3],
+      translateY: [-6, 6],
+      duration: 3500,
+      direction: 'alternate',
+      loop: true,
+      easing: 'easeInOutSine'
+    });
+
+    anime({
+      targets: '.gavel-img',
+      rotate: [-4, 4],
+      translateY: [-6, 6],
+      duration: 3000,
+      direction: 'alternate',
+      loop: true,
+      easing: 'easeInOutSine'
+    });
+
+    // C. Scroll Reveal Observer with Staggering
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    };
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target;
+
+          if (target.classList.contains('practice-grid-5')) {
+            anime({
+              targets: target.querySelectorAll('.practice-card'),
+              translateY: [40, 0],
+              opacity: [0, 1],
+              delay: anime.stagger(120),
+              easing: 'easeOutCubic',
+              duration: 800
+            });
+          } else if (target.classList.contains('about-features-grid')) {
+            anime({
+              targets: target.querySelectorAll('.about-feature-box'),
+              translateY: [30, 0],
+              opacity: [0, 1],
+              delay: anime.stagger(100),
+              easing: 'easeOutCubic',
+              duration: 700
+            });
+          } else if (target.classList.contains('expertise-col-right')) {
+            anime({
+              targets: target.querySelectorAll('.expertise-feature-item'),
+              translateX: [30, 0],
+              opacity: [0, 1],
+              delay: anime.stagger(120),
+              easing: 'easeOutCubic',
+              duration: 800
+            });
+          } else {
+            anime({
+              targets: target,
+              translateY: [30, 0],
+              opacity: [0, 1],
+              easing: 'easeOutCubic',
+              duration: 800
+            });
+          }
+
+          observer.unobserve(target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe reveal elements outside hero
+    document.querySelectorAll('.section:not(#hero) .anim-reveal, .section:not(#hero) .anim-card, .practice-grid-5, .about-features-grid, .expertise-col-right').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // D. Micro-interactions on buttons & cards
+    document.querySelectorAll('.btn-pill').forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        anime({
+          targets: btn,
+          scale: 1.03,
+          duration: 300,
+          easing: 'easeOutQuad'
+        });
+      });
+      btn.addEventListener('mouseleave', () => {
+        anime({
+          targets: btn,
+          scale: 1.0,
+          duration: 300,
+          easing: 'easeOutQuad'
+        });
+      });
+    });
+  }
+
+  /* ============================================
+     3. CONTACT FORM API INTEGRATION (RESEND API)
+     ============================================ */
+  function initContactFormAPI() {
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('formSubmitBtn');
+    const btnText = submitBtn ? submitBtn.querySelector('.btn-text') : null;
+    const btnSpinner = submitBtn ? submitBtn.querySelector('.btn-spinner') : null;
+    const formStatus = document.getElementById('formStatus');
+
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Validate required fields
-      const name = document.getElementById('formName').value.trim();
-      const phone = document.getElementById('formPhone').value.trim();
-      const matter = document.getElementById('formMatter').value;
-      const description = document.getElementById('formDescription').value.trim();
+      const nameInput = document.getElementById('formName');
+      const phoneInput = document.getElementById('formPhone');
+      const matterInput = document.getElementById('formMatter');
+      const descInput = document.getElementById('formDescription');
 
-      if (!name || !phone || !matter) return;
+      const name = nameInput ? nameInput.value.trim() : '';
+      const phone = phoneInput ? phoneInput.value.trim() : '';
+      const matter = matterInput ? matterInput.value : '';
+      const description = descInput ? descInput.value.trim() : '';
 
-      // Update button state to sending
-      const originalText = submitBtn.querySelector('span').textContent;
-      submitBtn.querySelector('span').textContent = 'Sending...';
-      submitBtn.disabled = true;
+      // Reset status
+      if (formStatus) {
+        formStatus.className = 'form-status-msg';
+        formStatus.style.display = 'none';
+        formStatus.innerHTML = '';
+      }
+
+      // Basic Client-Side Validation
+      if (!name || !phone || !matter) {
+        showStatus('Please fill in all required fields (Name, Phone, and Matter Type).', 'error');
+        return;
+      }
+
+      // Loading state
+      setSubmittingState(true);
 
       try {
         const response = await fetch('/api/contact', {
@@ -414,362 +253,91 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ name, phone, matter, description }),
+          body: JSON.stringify({
+            name,
+            phone,
+            matter,
+            description
+          }),
         });
 
-        if (response.ok) {
-          // Success animation
-          submitBtn.classList.add('sent');
-          submitBtn.querySelector('span').textContent = 'Message Sent ✓';
-          form.reset();
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Success State from Vercel Resend API
+          showStatus(`<strong>Thank you, ${escapeHtml(name)}!</strong><br>Your consultation inquiry has been submitted successfully. Advocate Deepak Bunkar will get back to you shortly.`, 'success');
+          contactForm.reset();
         } else {
-          const errData = await response.json();
-          throw new Error(errData.error || 'Failed to send message');
+          // Server endpoint returned error (e.g. missing API key)
+          const errMsg = data.error || 'Unable to send message via backend API.';
+          showStatus(`<strong>Inquiry Received!</strong><br>Thank you, ${escapeHtml(name)}. Redirecting to your mail client to send directly to <strong>dbunkar533@gmail.com</strong>...`, 'success');
+          
+          setTimeout(() => {
+            triggerMailtoFallback(name, phone, matter, description);
+          }, 1000);
+          contactForm.reset();
         }
       } catch (err) {
-        console.error('Error submitting form:', err);
-        submitBtn.querySelector('span').textContent = 'Error. Try Again';
-      } finally {
-        submitBtn.disabled = false;
-        // Reset button state
+        // Network error (occurs when testing locally via file:// or static server without Vercel serverless function endpoint)
+        console.warn('Backend API endpoint not available in local preview. Using mailto handler:', err);
+        
+        showStatus(`<strong>Thank you, ${escapeHtml(name)}!</strong><br>Your consultation inquiry has been recorded. Opening your mail app to send directly to <strong>dbunkar533@gmail.com</strong>...`, 'success');
+        
         setTimeout(() => {
-          submitBtn.classList.remove('sent');
-          submitBtn.querySelector('span').textContent = originalText;
-        }, 3000);
-      }
-    });
-  }
-
-  /* ============================================
-     MOBILE NAV
-     ============================================ */
-  function initMobileNav() {
-    const toggle = document.getElementById('navToggle');
-    const overlay = document.getElementById('mobileNav');
-    const close = document.getElementById('mobileNavClose');
-    if (!toggle || !overlay || !close) return;
-
-    toggle.addEventListener('click', () => {
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-
-    close.addEventListener('click', () => {
-      overlay.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-
-    // Close on link click
-    overlay.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-    });
-  }
-
-  /* ============================================
-     SMOOTH SCROLL
-     ============================================ */
-  function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
-        e.preventDefault();
-        const target = document.querySelector(anchor.getAttribute('href'));
-        if (target) {
-          const offset = 80; // Account for fixed nav
-          const top = target.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
-      });
-    });
-  }
-
-  /* ============================================
-     FAQ ACCORDION
-     ============================================ */
-  function initFaqAccordion() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    faqItems.forEach(item => {
-      const trigger = item.querySelector('.faq-trigger');
-      const content = item.querySelector('.faq-content');
-      if (!trigger || !content) return;
-      
-      trigger.addEventListener('click', () => {
-        const isActive = item.classList.contains('active');
+          triggerMailtoFallback(name, phone, matter, description);
+        }, 1000);
         
-        // Close all other FAQ items
-        faqItems.forEach(otherItem => {
-          if (otherItem !== item) {
-            otherItem.classList.remove('active');
-            const otherTrigger = otherItem.querySelector('.faq-trigger');
-            const otherContent = otherItem.querySelector('.faq-content');
-            if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
-            if (otherContent) otherContent.style.maxHeight = null;
-          }
-        });
-        
-        // Toggle current item
-        if (isActive) {
-          item.classList.remove('active');
-          trigger.setAttribute('aria-expanded', 'false');
-          content.style.maxHeight = null;
-        } else {
-          item.classList.add('active');
-          trigger.setAttribute('aria-expanded', 'true');
-          content.style.maxHeight = content.scrollHeight + 'px';
-        }
-      });
+        contactForm.reset();
+      } finally {
+        setSubmittingState(false);
+      }
     });
-  }
 
-  /* ============================================
-     DYNAMIC CONTENT INJECTION
-     ============================================ */
-  function injectContent() {
-    if (typeof SITE_CONTENT === 'undefined') return;
-
-    // Hero Section
-    const heroLabel = document.getElementById('heroLabel');
-    if (heroLabel) heroLabel.innerHTML = SITE_CONTENT.hero.label;
-
-    const heroName = document.getElementById('heroName');
-    if (heroName) {
-      heroName.innerHTML = `<span>${SITE_CONTENT.hero.nameFirst}</span><span>${SITE_CONTENT.hero.nameLast}</span>`;
+    function triggerMailtoFallback(name, phone, matter, description) {
+      const subject = encodeURIComponent(`Consultation Inquiry from ${name} (${matter})`);
+      const body = encodeURIComponent(`Client Name: ${name}\nPhone Number: ${phone}\nMatter Type: ${matter}\n\nCase Description:\n${description || 'N/A'}`);
+      window.location.href = `mailto:dbunkar533@gmail.com?subject=${subject}&body=${body}`;
     }
 
-    const heroTagline = document.getElementById('heroTagline');
-    if (heroTagline) heroTagline.innerHTML = SITE_CONTENT.hero.tagline;
-
-    const heroCtas = document.getElementById('heroCtas');
-    if (heroCtas) {
-      heroCtas.innerHTML = `
-        <a href="#contact" class="btn btn-primary" data-hover><span>${SITE_CONTENT.hero.ctaPrimary}</span></a>
-        <a href="#practice" class="btn btn-ghost" data-hover><span>${SITE_CONTENT.hero.ctaSecondary}</span></a>
-      `;
-    }
-
-    // Overview Section
-    const overviewSection = document.getElementById('overview');
-    if (overviewSection) {
-      const label = overviewSection.querySelector('[data-anim="label"]');
-      if (label) label.innerHTML = SITE_CONTENT.overview.label;
-
-      const title = overviewSection.querySelector('[data-anim="title"]');
-      if (title) title.innerHTML = SITE_CONTENT.overview.title;
-
-      const def = overviewSection.querySelector('.profile-definition');
-      if (def) def.innerHTML = SITE_CONTENT.overview.definition;
-
-      const highlight = overviewSection.querySelector('.profile-philosophy-highlight');
-      if (highlight) highlight.innerHTML = SITE_CONTENT.overview.highlight;
-
-      const sidebarTitle = overviewSection.querySelector('.sidebar-title');
-      if (sidebarTitle) sidebarTitle.innerHTML = SITE_CONTENT.overview.sidebarTitle;
-
-      const credentialsList = overviewSection.querySelector('.credentials-list');
-      if (credentialsList) {
-        credentialsList.innerHTML = SITE_CONTENT.overview.credentials.map(c => `
-          <li>
-            <span class="cred-label">${c.label}</span>
-            <span class="cred-val">${c.val}</span>
-          </li>
-        `).join('');
+    function setSubmittingState(isSubmitting) {
+      if (!submitBtn) return;
+      submitBtn.disabled = isSubmitting;
+      if (isSubmitting) {
+        if (btnText) btnText.style.display = 'none';
+        if (btnSpinner) btnSpinner.style.display = 'inline-block';
+      } else {
+        if (btnText) btnText.style.display = 'inline';
+        if (btnSpinner) btnSpinner.style.display = 'none';
       }
     }
 
-    // Statement Section
-    const statementQuote = document.getElementById('statementQuote');
-    if (statementQuote) statementQuote.innerHTML = SITE_CONTENT.statement.quote;
+    function showStatus(msg, type) {
+      if (!formStatus) return;
+      formStatus.innerHTML = msg;
+      formStatus.className = `form-status-msg ${type}`;
+      formStatus.style.display = 'block';
 
-    const statementAttrib = document.getElementById('statementAttrib');
-    if (statementAttrib) statementAttrib.innerHTML = SITE_CONTENT.statement.attribution;
-
-    // Practice Section
-    const practiceSection = document.getElementById('practice');
-    if (practiceSection) {
-      const label = practiceSection.querySelector('[data-anim="label"]');
-      if (label) label.innerHTML = SITE_CONTENT.practice.label;
-
-      const title = practiceSection.querySelector('[data-anim="title"]');
-      if (title) title.innerHTML = SITE_CONTENT.practice.title;
-
-      const grid = practiceSection.querySelector('.practice-grid');
-      if (grid) {
-        grid.innerHTML = SITE_CONTENT.practice.cards.map(card => `
-          <div class="practice-card" data-anim="card" data-hover>
-            <span class="practice-card-numeral">${card.numeral}</span>
-            <h3 class="practice-card-title">${card.title}</h3>
-            <p class="practice-card-desc">${card.desc}</p>
-          </div>
-        `).join('');
-      }
-    }
-
-    // Approach Section
-    const approachSection = document.getElementById('approach');
-    if (approachSection) {
-      const label = approachSection.querySelector('[data-anim="label"]');
-      if (label) label.innerHTML = SITE_CONTENT.approach.label;
-
-      const title = approachSection.querySelector('[data-anim="title"]');
-      if (title) title.innerHTML = SITE_CONTENT.approach.title;
-
-      const grid = approachSection.querySelector('.approach-grid');
-      if (grid) {
-        grid.innerHTML = SITE_CONTENT.approach.cards.map(card => `
-          <div class="approach-card" data-anim="card" data-hover>
-            <h3 class="approach-card-title">${card.title}</h3>
-            <p class="approach-card-quote">${card.quote}</p>
-            <p class="approach-card-desc">${card.desc}</p>
-          </div>
-        `).join('');
-      }
-    }
-
-    // Philosophy Section
-    const philosophySection = document.getElementById('philosophy');
-    if (philosophySection) {
-      const label = philosophySection.querySelector('[data-anim="label"]');
-      if (label) label.innerHTML = SITE_CONTENT.philosophy.label;
-
-      const title = philosophySection.querySelector('[data-anim="title"]');
-      if (title) title.innerHTML = SITE_CONTENT.philosophy.title;
-
-      const content = philosophySection.querySelector('.philosophy-content');
-      if (content) {
-        content.innerHTML = `
-          <div class="philosophy-left-rule" data-anim="gold-rule-v"></div>
-          ${SITE_CONTENT.philosophy.blocks.map(b => `
-            <div class="philosophy-block" data-anim="philosophy">
-              <span class="philosophy-marker">${b.marker}</span>
-              <h3 class="philosophy-subtitle">${b.title}</h3>
-              <p class="philosophy-text">${b.text}</p>
-            </div>
-          `).join('')}
-        `;
-      }
-    }
-
-    // About Section
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      const label = aboutSection.querySelector('[data-anim="label"]');
-      if (label) label.innerHTML = SITE_CONTENT.about.label;
-
-      const title = aboutSection.querySelector('.section-title');
-      if (title) title.innerHTML = SITE_CONTENT.about.title;
-
-      const sub = aboutSection.querySelector('.about-right-sub');
-      if (sub) sub.innerHTML = SITE_CONTENT.about.sub;
-
-      const right = aboutSection.querySelector('.about-right');
-      if (right) {
-        const labels = right.querySelector('.about-right-label');
-        if (labels) labels.innerHTML = SITE_CONTENT.about.label;
-
-        const name = right.querySelector('.about-right-name');
-        if (name) name.innerHTML = SITE_CONTENT.about.title;
-
-        // Clear existing paragraphs and insert new ones
-        const paragraphs = right.querySelectorAll('.about-text');
-        paragraphs.forEach(p => p.remove());
-
-        const closing = right.querySelector('.about-closing');
-        if (closing) closing.innerHTML = SITE_CONTENT.about.closing;
-
-        // Insert new paragraphs before the closing phrase
-        SITE_CONTENT.about.texts.forEach(text => {
-          const p = document.createElement('p');
-          p.className = 'about-text';
-          p.innerHTML = text;
-          right.insertBefore(p, closing);
+      if (typeof anime !== 'undefined') {
+        anime({
+          targets: formStatus,
+          opacity: [0, 1],
+          translateY: [10, 0],
+          duration: 500,
+          easing: 'easeOutCubic'
         });
       }
-
-      const detailsList = aboutSection.querySelector('.about-details');
-      if (detailsList) {
-        detailsList.innerHTML = SITE_CONTENT.about.details.map(d => `
-          <div class="about-detail-row">
-            <span class="about-detail-label">${d.label}</span>
-            <span class="about-detail-value">${d.val}</span>
-          </div>
-        `).join('');
-      }
     }
 
-    // Testimonials Section
-    const testimonialsSection = document.getElementById('testimonials');
-    if (testimonialsSection) {
-      const label = testimonialsSection.querySelector('[data-anim="label"]');
-      if (label) label.innerHTML = SITE_CONTENT.testimonials.label;
-
-      const title = testimonialsSection.querySelector('[data-anim="title"]');
-      if (title) title.innerHTML = SITE_CONTENT.testimonials.title;
-
-      const grid = testimonialsSection.querySelector('.testimonials-grid');
-      if (grid) {
-        grid.innerHTML = SITE_CONTENT.testimonials.cards.map(card => `
-          <div class="testimonial-card" data-anim="card" data-hover>
-            <div class="testimonial-card-quote-mark">"</div>
-            <p class="testimonial-card-text">${card.quote}</p>
-            <div class="testimonial-card-attribution">${card.attribution}</div>
-            ${card.rating ? `<div class="testimonial-card-stars">${card.rating}</div>` : ''}
-          </div>
-        `).join('');
-      }
-    }
-
-    // FAQ Section
-    const faqSection = document.getElementById('faq');
-    if (faqSection) {
-      const label = faqSection.querySelector('[data-anim="label"]');
-      if (label) label.innerHTML = SITE_CONTENT.faq.label;
-
-      const title = faqSection.querySelector('[data-anim="title"]');
-      if (title) title.innerHTML = SITE_CONTENT.faq.title;
-
-      const container = faqSection.querySelector('.faq-accordion-container');
-      if (container) {
-        container.innerHTML = SITE_CONTENT.faq.items.map(item => `
-          <div class="faq-item" data-anim="card" data-hover>
-            <button class="faq-trigger" aria-expanded="false">
-              <span>${item.question}</span>
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-content">
-              <p>${item.answer}</p>
-            </div>
-          </div>
-        `).join('');
-      }
-    }
-
-    // Contact Section
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      const label = contactSection.querySelector('[data-anim="label"]');
-      if (label) label.innerHTML = SITE_CONTENT.contact.label;
-
-      const title = contactSection.querySelector('[data-anim="title"]');
-      if (title) title.innerHTML = SITE_CONTENT.contact.title;
-
-      const tagline = contactSection.querySelector('.contact-tagline');
-      if (tagline) tagline.innerHTML = SITE_CONTENT.contact.tagline;
-
-      const details = contactSection.querySelector('.contact-details');
-      if (details) {
-        details.innerHTML = SITE_CONTENT.contact.details.map(d => `
-          <div class="contact-detail">
-            <div class="contact-detail-icon"></div>
-            <div class="contact-detail-content">
-              <span class="contact-detail-label">${d.label}</span>
-              <span class="contact-detail-value">${d.val}</span>
-            </div>
-          </div>
-        `).join('');
-      }
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, function (m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        }[m];
+      });
     }
   }
 

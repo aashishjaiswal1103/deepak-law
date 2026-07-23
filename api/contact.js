@@ -23,8 +23,8 @@ module.exports = async (req, res) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Ritik Jayaswal Portfolio <onboarding@resend.dev>',
-        to: ['ritikjayaswal2105@gmail.com'],
+        from: 'Deepak Bunkar Portfolio <onboarding@resend.dev>',
+        to: ['dbunkar533@gmail.com'],
         subject: `New Inquiry from ${name} (${matter})`,
         html: `
           <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 8px;">

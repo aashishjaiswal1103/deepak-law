@@ -1,29 +1,28 @@
-# Master Keyword List: Advocate Ritik Jayaswal (Complete Reference)
+# Master Keyword List: Advocate Deepak Bunkar (Complete Reference)
 
-This document maps all target keywords, search queries, and answer engine optimization (AEO) questions for the portfolio of Advocate Ritik Jayaswal in Jaipur, Rajasthan.
+This document maps all target keywords, search queries, and answer engine optimization (AEO) questions for the portfolio of Advocate Deepak Bunkar in Jaipur, Rajasthan.
 
 ---
 
 ## A. Name-Based Keywords (Brand / Direct Search)
-These keywords are search phrases used by prospects who already know Ritik's name or have heard of his practice:
-*   `ritik jayaswal`
-*   `ritik jayaswal advocate`
-*   `ritik jayaswal lawyer`
-*   `ritik jayaswal jaipur`
-*   `ritik jayaswal lawyer jaipur`
-*   `ritik jayaswal advocate jaipur`
-*   `ritik jayaswal high court`
-*   `ritik jayaswal district court`
-*   `advocate ritik jayaswal`
-*   `adv ritik jayaswal`
-*   `ritik jayaswal legal`
-*   `ritik jayaswal law`
-*   `ritik jayaswal bar council`
-*   `ritik jayaswal rajasthan`
-*   `ritik lawyer jaipur`
-*   `ritk jayaswal` (common typo)
-*   `ritik jaishwal lawyer` (common typo)
-*   `ritik jaiswal advocate` (common typo)
+These keywords are search phrases used by prospects who already know Deepak's name or have heard of his practice:
+*   `deepak bunkar`
+*   `deepak bunkar advocate`
+*   `deepak bunkar lawyer`
+*   `deepak bunkar jaipur`
+*   `deepak bunkar lawyer jaipur`
+*   `deepak bunkar advocate jaipur`
+*   `deepak bunkar high court`
+*   `deepak bunkar district court`
+*   `advocate deepak bunkar`
+*   `adv deepak bunkar`
+*   `deepak bunkar legal`
+*   `deepak bunkar law`
+*   `deepak bunkar bar council`
+*   `deepak bunkar rajasthan`
+*   `deepak lawyer jaipur`
+*   `dp bunkar lawyer` (common abbreviation)
+*   `d bunkar advocate` (common abbreviation)
 
 ---
 
@@ -207,7 +206,6 @@ Keywords for business disputes, startup compliance, MSMEs, and legal notices:
 *   `nri property lawyer jaipur`
 *   `nri property dispute india`
 *   `nri lawyer rajasthan`
-*   
 
 ---
 
