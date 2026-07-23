@@ -1,0 +1,45 @@
+# =========================================================================
+# ROBOTS.TXT — ADVOCATE DEEPAK BUNKAR PORTFOLIO
+# Site: https://deepak-law.vercel.app/
+# =========================================================================
+
+# Allow standard search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Allow AI Search & Citation engines (Answer Engine Optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Block generic scraper crawlers
+User-agent: CCBot
+Disallow: /
+
+User-agent: ByteSpider
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+# General rules
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Reference sitemap location
+Sitemap: https://deepak-law.vercel.app/sitemap.xml
