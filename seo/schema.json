@@ -3,7 +3,7 @@
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://deepak-bunkar.vercel.app/#person",
+      "@id": "https://deepak-law.vercel.app/#person",
       "name": "Deepak Bunkar",
       "jobTitle": "Advocate & Lawyer",
       "birthDate": "2002-02-23",
@@ -23,12 +23,12 @@
         "Section 138 Cheque Bounce Cases",
         "Commercial Arbitration & Mediation"
       ],
-      "url": "https://deepak-bunkar.vercel.app/",
-      "image": "https://deepak-bunkar.vercel.app/assets/portrait.webp"
+      "url": "https://deepak-law.vercel.app/",
+      "image": "https://deepak-law.vercel.app/assets/portrait.webp"
     },
     {
       "@type": "LegalService",
-      "@id": "https://deepak-bunkar.vercel.app/#legal-service",
+      "@id": "https://deepak-law.vercel.app/#legal-service",
       "name": "Deepak Bunkar — Advocate",
       "alternateName": [
         "Advocate Deepak Bunkar",
@@ -50,10 +50,10 @@
         "Rajasthan High Court Lawyer"
       ],
       "description": "Deepak Bunkar is a practicing Advocate at the Jaipur District Court and Rajasthan High Court, representing clients in criminal defense, property disputes, divorce, writ petitions, and business litigation.",
-      "url": "https://deepak-bunkar.vercel.app/",
+      "url": "https://deepak-law.vercel.app/",
       "telephone": "+91-7665304281",
       "email": "dbunkar533@gmail.com",
-      "image": "https://deepak-bunkar.vercel.app/assets/portrait.webp",
+      "image": "https://deepak-law.vercel.app/assets/portrait.webp",
       "priceRange": "$$",
       "address": {
         "@type": "PostalAddress",
@@ -82,12 +82,12 @@
         "closes": "18:00"
       },
       "founder": {
-        "@id": "https://deepak-bunkar.vercel.app/#person"
+        "@id": "https://deepak-law.vercel.app/#person"
       }
     },
     {
       "@type": "FAQPage",
-      "@id": "https://deepak-bunkar.vercel.app/#faq",
+      "@id": "https://deepak-law.vercel.app/#faq",
       "mainEntity": [
         {
           "@type": "Question",
