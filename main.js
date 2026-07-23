@@ -6,10 +6,11 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Initialize Animations & Form Handler
+  // Initialize Animations, Form Handler & Security Protection
   initNavEffects();
   initAnimeAnimations();
   initContactFormAPI();
+  initCodeProtection();
 
   /* ============================================
      1. NAVBAR EFFECTS
@@ -339,6 +340,67 @@ document.addEventListener('DOMContentLoaded', () => {
         }[m];
       });
     }
+  }
+
+  /* ============================================
+     4. CODE & INSPECTION PROTECTION
+     ============================================ */
+  function initCodeProtection() {
+    // Print Security Warning Banner in DevTools Console
+    console.log(
+      '%cStop! Security Notice',
+      'color: #C8A96E; font-size: 22px; font-weight: bold;'
+    );
+    console.log(
+      '%cThis website and its source code are protected. Unauthorized copying of text, graphics, or code is prohibited.\nAdvocate Deepak Bunkar — All Rights Reserved.',
+      'font-size: 12px; color: #666666; font-family: sans-serif;'
+    );
+
+    // Disable Right-Click Context Menu
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      return false;
+    });
+
+    // Disable DevTools & View Source Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      // F12
+      if (e.keyCode === 123 || e.key === 'F12') {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+Shift+I / Cmd+Option+I (Inspect Element)
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.keyCode === 73 || e.key === 'I' || e.key === 'i')) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+Shift+J / Cmd+Option+J (Console)
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.keyCode === 74 || e.key === 'J' || e.key === 'j')) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+Shift+C / Cmd+Option+C (Element Selector)
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.keyCode === 67 || e.key === 'C' || e.key === 'c')) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+U / Cmd+Option+U (View Source)
+      if ((e.ctrlKey || e.metaKey) && (e.keyCode === 85 || e.key === 'U' || e.key === 'u')) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+S / Cmd+S (Save Page)
+      if ((e.ctrlKey || e.metaKey) && (e.keyCode === 83 || e.key === 'S' || e.key === 's')) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // Prevent Image Dragging
+    document.querySelectorAll('img').forEach(img => {
+      img.setAttribute('draggable', 'false');
+      img.addEventListener('dragstart', (e) => e.preventDefault());
+    });
   }
 
 });

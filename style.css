@@ -1088,3 +1088,15 @@ img {
     gap: 20px;
   }
 }
+
+/* SECURITY & INSPECTION PROTECTION STYLES */
+img {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+body {
+  -webkit-touch-callout: none;
+}
+

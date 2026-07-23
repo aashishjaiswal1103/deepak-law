@@ -24,7 +24,7 @@
         "Commercial Arbitration & Mediation"
       ],
       "url": "https://deepak-law.vercel.app/",
-      "image": "https://deepak-law.vercel.app/assets/portrait.webp"
+      "image": "https://deepak-law.vercel.app/assets/person.webp"
     },
     {
       "@type": "LegalService",
@@ -53,7 +53,7 @@
       "url": "https://deepak-law.vercel.app/",
       "telephone": "+91-7665304281",
       "email": "dbunkar533@gmail.com",
-      "image": "https://deepak-law.vercel.app/assets/portrait.webp",
+      "image": "https://deepak-law.vercel.app/assets/person.webp",
       "priceRange": "$$",
       "address": {
         "@type": "PostalAddress",
